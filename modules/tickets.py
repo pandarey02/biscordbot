@@ -20,6 +20,26 @@ async def create(payload, guild):
     emb = discord.Embed(description='Aby zamknąć ten ticket, zareaguj za pomocą 🔒',
                         colour=discord.Colour.from_rgb(24, 167, 161)).set_footer(
         text="Dinozaur Pimpuś ∙ Dziś o " + time.strftime("%H:%M"))
+    emb1 = discord.Embed(title='ticket zamknienty', description='zareaguj za pomocą 🔓 aby otworzyć albo ⛔ aby usunąć',
+                         colour=discord.Colour.from_rgb(24, 167, 161)).set_footer(
+        text="Dinozaur Pimpuś ∙ Dziś o " + time.strftime("%H:%M"))
+
+    class View2(discord.ui.View):
+        @discord.ui.button(label="Otwórz ponownie", row=0, style=discord.ButtonStyle.primary, emoji="🔓")
+        async def button_callback(self, button, interaction):
+            await channel.edit(name='ticket-{0}'.format(stri.lower()))
+            await interaction.response.edit_message(embed=emb, view=View())
+
+        @discord.ui.button(label="Usuń", row=0, style=discord.ButtonStyle.danger, emoji="⛔")
+        async def button_callback2(self, button, interaction):
+            await channel.delete()
+
+    class View(discord.ui.View):
+        @discord.ui.button(label="Zamknij ticket", style=discord.ButtonStyle.primary,
+                           emoji="🔒")
+        async def button_callback2(self, button, interaction):
+            await channel.edit(name='closed-{0}'.format(stri.lower()))
+            await interaction.response.edit_message(embed=emb1, view=View2())
 
     match payload.emoji.name:
         case '1️⃣':
@@ -33,8 +53,9 @@ async def create(payload, guild):
                                  category=pve) is None:
                 channel = await guild.create_text_channel(name='Ticket-{0}'.format(stri), overwrites=perm,
                                                           category=pve)
-                msg = await channel.send(content='Witaj <@{0}> w czym możemy pomóc?'.format(payload.user_id), embed=emb)
-                await msg.add_reaction('🔒')
+
+                await channel.send(content='Witaj <@{0}> w czym możemy pomóc?'.format(payload.user_id),
+                                   embed=emb, view=View())
 
         case '2️⃣':
             perm = {
@@ -47,8 +68,8 @@ async def create(payload, guild):
                                  category=rp) is None:
                 channel = await guild.create_text_channel(name='Ticket-{0}'.format(stri), overwrites=perm,
                                                           category=rp)
-                msg = await channel.send(content='Witaj <@{0}> w czym możemy pomóc?'.format(payload.user_id), embed=emb)
-                await msg.add_reaction('🔒')
+                await channel.send(content='Witaj <@{0}> w czym możemy pomóc?'.format(payload.user_id),
+                                   embed=emb, view=View())
 
         case '3️⃣':
             perm = {
@@ -61,8 +82,8 @@ async def create(payload, guild):
                                  category=days) is None:
                 channel = await guild.create_text_channel(name='Ticket-{0}'.format(stri), overwrites=perm,
                                                           category=days)
-                msg = await channel.send(content='Witaj <@{0}> w czym możemy pomóc?'.format(payload.user_id), embed=emb)
-                await msg.add_reaction('🔒')
+                await channel.send(content='Witaj <@{0}> w czym możemy pomóc?'.format(payload.user_id),
+                                   embed=emb, view=View())
 
         case '4️⃣':
             perm = {
@@ -75,8 +96,8 @@ async def create(payload, guild):
                                  category=conan) is None:
                 channel = await guild.create_text_channel(name='Ticket-{0}'.format(stri), overwrites=perm,
                                                           category=conan)
-                msg = await channel.send(content='Witaj <@{0}> w czym możemy pomóc?'.format(payload.user_id), embed=emb)
-                await msg.add_reaction('🔒')
+                await channel.send(content='Witaj <@{0}> w czym możemy pomóc?'.format(payload.user_id),
+                                   embed=emb, view=View())
 
         case '5️⃣':
             perm = {
@@ -89,29 +110,5 @@ async def create(payload, guild):
                                  category=rust) is None:
                 channel = await guild.create_text_channel(name='Ticket-{0}'.format(stri), overwrites=perm,
                                                           category=rust)
-                msg = await channel.send(content='Witaj <@{0}> w czym możemy pomóc?'.format(payload.user_id), embed=emb)
-                await msg.add_reaction('🔒')
-
-
-async def close(bot, payload):
-    emb = discord.Embed(title='ticket zamknienty', description='zareaguj za pomocą 🔓 aby otworzyć albo ⛔ aby usunąć',
-                        colour=discord.Colour.from_rgb(24, 167, 161)).set_footer(
-        text="Dinozaur Pimpuś ∙ Dziś o " + time.strftime("%H:%M"))
-    if payload.member != bot.user:
-        stri = payload.member.name
-        tc = bot.get_channel(payload.channel_id)
-        if payload.emoji.name == '🔒':
-            if tc.name == 'ticket-{0}'.format(stri.lower()):
-                msg = await tc.send(embed=emb)
-                await msg.add_reaction('🔓')
-                await msg.add_reaction('⛔')
-                await tc.edit(name='closed-{0}'.format(stri.lower()))
-        elif payload.emoji.name == '🔓':
-            await tc.edit(name='ticket-{0}'.format(stri.lower()))
-        elif payload.emoji.name == '⛔':
-            if discord.utils.get(payload.member.roles, id=963763373059764260) or \
-                    discord.utils.get(payload.member.roles, id=963763373059764259) or \
-                    discord.utils.get(payload.member.roles, id=963763373059764258) or \
-                    discord.utils.get(payload.member.roles, id=976101841010049024) or \
-                    discord.utils.get(payload.member.roles, id=976101842624839720) is not None:
-                await tc.delete(reason='ticket closed')
+                await channel.send(content='Witaj <@{0}> w czym możemy pomóc?'.format(payload.user_id),
+                                   embed=emb, view=View())

@@ -1,6 +1,7 @@
 import os
 import discord
 from modules import roles, startup, welcome, tickets
+
 intents = discord.Intents.all()
 
 bot = discord.Bot(intents=intents)
@@ -36,18 +37,17 @@ async def on_raw_reaction_add(payload):
             await roles.add(bot, payload, guild)
         case 963763374133493810:
             await roles.add(bot, payload, guild)
-        case _:
-            await tickets.close(bot, payload)
 
 
 @bot.event
-async def on_raw_reaction_remove(self, payload):
+async def on_raw_reaction_remove(payload):
     await roles.remove(payload, guild)
 
 
 @bot.slash_command(guild_ids=[963763372422213703], )
 async def latency(self):
     await self.respond(bot.latency)
+
 
 
 bot.run(os.environ.get("TOKEN"))
