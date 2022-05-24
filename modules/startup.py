@@ -4,7 +4,6 @@ async def start(bot):
     rc3 = ['🐶', '🐱', '🐭', '🐹', '🐹', '🐰', '🦊', '🐻', '🐼', '🐯', '🦁', '🦁', '🐮', '🐸', '🐵', '🐔']
     rc4 = ['🇦', '🇧', '🇨', '🇩', '🇪', '🇫', '🇬', '🇭', '🇮']
     rc5 = ['🌱', '⚔', '⛏', '1️⃣', '2️⃣']
-    rc6 = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣']
     for rc in rc1:
         channel = bot.get_channel(963763374133493812)
         msg = await channel.fetch_message(963781199770304522)
@@ -27,8 +26,4 @@ async def start(bot):
     for rc in rc5:
         channel = bot.get_channel(963763374133493810)
         msg = await channel.fetch_message(974368463097315378)
-        await msg.add_reaction(rc)
-    for rc in rc6:
-        channel = bot.get_channel(963763373667930120)
-        msg = await channel.fetch_message(976080090314194975)
         await msg.add_reaction(rc)
