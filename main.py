@@ -2,6 +2,7 @@ import os
 import discord
 from modules import roles, startup, welcome, tickets
 
+
 intents = discord.Intents.all()
 
 bot = discord.Bot(intents=intents)
@@ -31,11 +32,7 @@ async def on_member_remove():
 
 @bot.event
 async def on_raw_reaction_add(payload):
-    match payload.channel_id:
-        case 963763374133493812:
-            await roles.add(bot, payload, guild)
-        case 963763374133493810:
-            await roles.add(bot, payload, guild)
+    await roles.add(bot, payload, guild)
 
 
 @bot.event
@@ -43,9 +40,9 @@ async def on_raw_reaction_remove(payload):
     await roles.remove(payload, guild)
 
 
-@bot.slash_command(guild_ids=[963763372422213703], )
+@bot.slash_command()
 async def latency(self):
-    await self.respond(bot.latency)
+    await self.respond(str(round(bot.latency * 1000, 2)) + 'ms')
 
 
 bot.run(os.environ.get("TOKEN"))
