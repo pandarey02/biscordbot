@@ -86,5 +86,5 @@ async def ticket(bot, guild):
                           embed=emb, view=View())
 
     channel = bot.get_channel(963763373667930120)
-    msg = await channel.fetch_message(978735402682818620)
+    msg = await channel.fetch_message(978965800981495828)
     await msg.edit(view=MyView())
