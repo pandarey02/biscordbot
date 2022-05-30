@@ -36,7 +36,7 @@ async def ticket(bot, guild):
             await chan.edit(name='closed-{0}'.format(number[1]))
             await interaction.response.edit_message(embed=emb1, view=View2())
 
-    class MyView(discord.ui.View):
+    class Help(discord.ui.View):
         @discord.ui.select(
             placeholder="Wybierz Kategorie Pomocy",
             min_values=1,
@@ -86,5 +86,5 @@ async def ticket(bot, guild):
                           embed=emb, view=View())
 
     channel = bot.get_channel(963763373667930120)
-    msg = await channel.fetch_message(978965800981495828)
-    await msg.edit(view=MyView())
+    msg = await channel.fetch_message(978735402682818620)
+    await msg.edit(view=Help())
