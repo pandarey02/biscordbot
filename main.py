@@ -2,7 +2,6 @@ import os
 import discord
 from modules import roles, startup, welcome, tickets
 
-
 intents = discord.Intents.all()
 
 bot = discord.Bot(intents=intents)
@@ -25,7 +24,7 @@ async def on_member_join(member):
 
 
 @bot.event
-async def on_member_remove():
+async def on_member_remove(member):
     stat = bot.get_channel(963763373667930118)
     await stat.edit(name="『👥』Użytkownicy: " + str(guild.member_count))
 
