@@ -11,21 +11,20 @@ bot = discord.Bot(intents=intents)
 async def on_ready():
     print('Logged on as {0}!'.format(bot.user))
     global guild
-    guild = bot.get_guild(963763372422213703)
-    await tickets.ticket(bot, guild)
+    guild = bot.get_guild(1158762932235149452)
     await startup.start(bot)
 
 
 @bot.event
 async def on_member_join(member):
-    stat = bot.get_channel(757639432814985278)
+    stat = bot.get_channel(1195315471810039878)
     await welcome.welcome(bot, member, guild)
     await stat.edit(name="『👥』Użytkownicy: " + str(guild.member_count))
 
 
 @bot.event
 async def on_member_remove(member):
-    stat = bot.get_channel(963763373667930118)
+    stat = bot.get_channel(1195315471810039878)
     await stat.edit(name="『👥』Użytkownicy: " + str(guild.member_count))
 
 
